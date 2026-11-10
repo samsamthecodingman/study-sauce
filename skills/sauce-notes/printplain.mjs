@@ -50,7 +50,7 @@ const head = label => `<div style="${base}font-size:7.5pt;width:100%;padding:0 8
 const strip = (tabs, cur) => `<div style="${base}width:100%;padding:0 8mm;margin-bottom:1.5mm;display:flex;gap:0.6mm">` + tabs.map((t, i) =>
   `<div style="flex:1;text-align:center;font-size:6.5pt;line-height:4mm;height:4mm;${[].concat(cur).includes(i) ? 'background:#000;color:#fff;font-weight:700' : 'color:#888;border:0.3pt solid #bbb'}">${esc(t)}</div>`).join('') + '</div>';
 const print = async (extra) => {
-  const r = await send('Page.printToPDF', { preferCSSPageSize: true, scale: 1, printBackground: true, displayHeaderFooter: true, transferMode: 'ReturnAsStream', ...extra });
+  const r = await send('Page.printToPDF', { preferCSSPageSize: true, scale: +(process.env.SN_SCALE || 0.73), printBackground: true, displayHeaderFooter: true, transferMode: 'ReturnAsStream', ...extra });
   if (!r.result) { console.error('printToPDF failed', JSON.stringify(r.error)); process.exit(1); }
   const bufs = [];
   for (;;) {

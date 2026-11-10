@@ -1,6 +1,7 @@
 // Print notes.html to PDF via Chrome DevTools Protocol (page.printToPDF, streamed back).
 // usage: node print.mjs <chrome> <in.html> <out.pdf>
 // Also: fits the formula sheet, and warns on stderr about MathJax errors, raw TeX and formulas wider than their box.
+// Print scale: env SN_SCALE (default 0.73, the scale of the ECE4179 booklet; layout width is 665/scale px).
 // Heap limit for the renderer: env SN_HEAP_MB (default 2048).
 import { spawn } from 'node:child_process';
 import { writeFileSync, mkdtempSync, readFileSync } from 'node:fs';
@@ -50,7 +51,7 @@ if (!ok) { console.error('MathJax did not finish'); proc.kill(); process.exit(1)
 // Formula sheet: lay out at A4 content width (176mm), then widen any box whose maths
 // overflows to 2 or 3 grid columns; shrink only if it still does not fit at full width.
 await send('Emulation.setEmulatedMedia', { media: 'print' });
-await send('Emulation.setDeviceMetricsOverride', { width: 665, height: 1000, deviceScaleFactor: 1, mobile: false });
+await send('Emulation.setDeviceMetricsOverride', { width: Math.round(665 / +(process.env.SN_SCALE || 0.73)), height: 1000, deviceScaleFactor: 1, mobile: false });
 await sleep(300);
 const fit = await evalJS(`(()=>{const log=[];
   const over=f=>{const cs=getComputedStyle(f);const avail=f.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);let w=0,worst=null;
@@ -85,7 +86,7 @@ const head = label => `<div style="${base}font-size:7.5pt;width:100%;padding:0 8
 const strip = (tabs, cur) => `<div style="${base}width:100%;padding:0 8mm;margin-bottom:1.5mm;display:flex;gap:0.6mm">` + tabs.map((t, i) =>
   `<div style="flex:1;text-align:center;font-size:6.5pt;line-height:4mm;height:4mm;${[].concat(cur).includes(i) ? 'background:#000;color:#fff;font-weight:700' : 'color:#888;border:0.3pt solid #bbb'}">${esc(t)}</div>`).join('') + '</div>';
 const print = async (extra) => {
-  const r = await send('Page.printToPDF', { preferCSSPageSize: true, scale: 1, printBackground: true, displayHeaderFooter: true, transferMode: 'ReturnAsStream', ...extra });
+  const r = await send('Page.printToPDF', { preferCSSPageSize: true, scale: +(process.env.SN_SCALE || 0.73), printBackground: true, displayHeaderFooter: true, transferMode: 'ReturnAsStream', ...extra });
   if (!r.result) { console.error('printToPDF failed', JSON.stringify(r.error)); process.exit(1); }
   const bufs = [];
   for (;;) {

@@ -45,7 +45,7 @@ Quick structure check while writing: add `--html`. Outputs: `notes.html`, `<CODE
 - `MATHJAX ERRORS`, `RAW TEX OUTSIDE MATHJAX`, `WIDER THAN COLUMN`
 - unresolved refs (expected for chapters left out by `--only`), unfilled placeholders, ids without a page
 
-**Print scale:** if `WIDER THAN COLUMN` appears, shorten or split that formula. Never accept it: Chrome would shrink the whole book to fit and the type gets small.
+**Print scale:** pages print at 0.73 scale, as in the ECE4179 booklet (set `SN_SCALE=1` for full size, which makes the book about 35% longer). Whatever the scale, `WIDER THAN COLUMN` is a blocker: shorten or split that formula.
 
 Then look at three pages from different chapters (`pdftoppm -png -r 70 -f N -l N`): headings, formulas inside boxes, tab strip, nothing cut off. Report total pages and pages per chapter.
 
