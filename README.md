@@ -3,6 +3,7 @@
 Exam-study skills for Claude Code. Made by Sam Roberts with Claude.
 
 - **sauce-kb** reads your course page, the slides and worksheets on Google Drive, and forum threads, then builds your knowledge base: one notes file per week. It's built for Moodle, Ed and Panopto lecture recordings.
+- **sauce-notes** turns those notes into printable exam notes: a dense two-column PDF with a chapter per week, formula boxes, hand-computation steps and checked worked examples.
 - **sauce-quiz** quizzes you on those notes in Study Sauce, an interactive page with rendered maths, links back to the lecture video and slide, spaced repetition and weak-spot revision.
 
 In Study Sauce you can also make new quizzes and practice exams, ask Claude about any question, and report a problem with one button.

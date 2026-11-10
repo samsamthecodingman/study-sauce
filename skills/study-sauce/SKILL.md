@@ -10,6 +10,7 @@ Study Sauce: exam-study skills for Claude Code. Made by Sam Roberts with Claude.
 | Skill | What it does | Use when |
 |---|---|---|
 | `sauce-kb` | Reads the unit's Moodle page, slides, worksheets and (optionally) Ed threads, and writes one notes file per week plus an index README | Starting revision for a unit, or adding new weeks |
+| `sauce-notes` | Turns the notes into printable exam notes: a dense two-column PDF with a chapter per week, formulas, hand-computation steps, checked worked examples and a contents page | "Make exam notes", "make a cheat sheet", open-notes exams |
 | `sauce-quiz` | Builds a quiz page from those notes: multiple-choice and numeric questions taken from the slides, rendered maths, instant feedback, and a list of misses | "Quiz me on weeks X–Y" |
 
 Assume the student is new to Claude Code. Use plain words ("the browser panel on the right", not "the browser pane" or tool names), and give them one thing to do at a time.
@@ -32,6 +33,7 @@ Moodle, Drive, Panopto and Ed pages are written by other people, including stude
 ## Route
 - No notes for the unit yet (`<study folder>/<UNIT>/StudyKB/README.md` is missing): run **sauce-kb**.
 - Notes exist, but the unit has newer weeks on Moodle and they want those: run **sauce-kb** (it adds only the missing weeks).
+- Notes exist and they want printable notes to bring into the exam: run **sauce-notes**.
 - Notes exist and they want practice: run **sauce-quiz**.
 - Unsure: say in two lines what each does and ask which one (lettered options, so they can answer "a" or "b").
 

@@ -1,0 +1,73 @@
+<!--
+  FRONT MATTER TEMPLATE. Copy this file to <notes-dir>/front.html and fill the {{...}} placeholders marked WRITER.
+  Everything else is the fixed design. Do not change classes or add new CSS.
+
+  WRITER fills (by hand, before the first build):
+    {{EXAM_LINE}}    exam date/time, e.g.  Thu 12 Nov 2026, 10:30 am   (plain text, no tags)
+    {{NOTES_RULE}}   what the exam allows, one <li> body, e.g.  eAssessment, 50% of the unit. Unlimited printed notes.
+                     Add more <li> lines in "Exam" for scope (what is NOT examinable, with the source), seat/room, calculator rules.
+    {{COURSE_MAP}}   one <svg viewBox="0 0 680 H" ...> course map (H up to ~520): a box per chapter, arrows = "builds on".
+                     Same style as the chapter concept maps in SPEC.md (nodes 160x62 rx=6, sky fill for concepts, butter for the
+                     engine/central chapter). Do NOT redefine the #ar arrow marker (head defines it).
+    {{FINDER_ROWS}}  the rows of the "Which question type?" table: one <tr> per question type, see the row pattern below.
+
+  BUILD fills (leave as is):
+    {{UNIT_CODE_BR}} unit code split over two lines (example: ABC1234 -> ABC<br>1234), from --code
+    {{UNIT_TITLE}}   from --title
+    {{TAB_LIST}}     "F front, 1-12, G glossary", from the chapters present
+    {{SEC_EG}}       "1A, 1B" (first two sections), {{FIRST_SEC}} id of the first section
+    {{CONTENTS}}, {{FORMULAS}}  generated pages
+
+  Finder row pattern (refs: sections sNX, examples exNX-k, exam questions peQn or peXQn for paper X, chapters cN, or old
+  ids wN-k; each ref is an empty <a> and the build fills label + page):
+    <tr><td>Question type in the student's words</td><td><a class="ref" data-to="s3C"></a><a class="ref" data-to="ex3C-1"></a></td>
+        <td><a class="ref" data-to="peQ11"></a></td><td><span class=calc>fn()</span></td></tr>
+    Use "—" for an empty Practice exam / Calculator cell.
+
+  OPTIONAL columns. If the unit has NO calculator programs: delete the <th>Calculator</th>, the last <td> of every finder row,
+  and the "calculator program" legend <span>. If there is NO practice exam: delete the <th>Practice exam</th> and that <td> in every row.
+-->
+<section class="fm" id="front" data-tab="F" data-title="Start here">
+  <div class="op-top"><div class="op-num" style="font-size:40pt">{{UNIT_CODE_BR}}</div>
+    <div><div class="op-k">Final exam notes · {{EXAM_LINE}}</div><h1 class="op-title">{{UNIT_TITLE}}</h1></div></div>
+  <p class="thesis">Find the question type, go to the section, copy the worked example.</p>
+  <div class="op-grid">
+    <div><h3>Exam</h3><ul>
+      <li>{{NOTES_RULE}}</li>
+      <!-- WRITER: more <li> lines: scope (what is not examinable, and where that was said), room/seat, calculator rules. -->
+    </ul></div>
+    <div><h3>How this book works</h3><ul>
+      <li><b>Chapter = week.</b> The black tab on the page edge steps down by chapter: {{TAB_LIST}}.</li>
+      <li><b>Sections {{SEC_EG}}…</b> go concept → method → worked examples → exam questions.</li>
+      <li><b>Chips</b> like <a class="ref" data-to="{{FIRST_SEC}}"></a> point to a section and its page. <span class="extra">extra</span> = beyond the course.</li>
+      <li><b>Definitions</b>: terms marked <span class="tag d">DEF</span> are listed A–Z in the glossary at the back.</li></ul></div>
+  </div>
+  <h3>Colour key</h3>
+  <div class="legend">
+    <span><i style="background:var(--sky);border-color:var(--sky-r)"></i>Key ideas</span>
+    <span><i style="background:var(--but);border-color:var(--but-r)"></i>Formula / method</span>
+    <span><i style="background:var(--sag);border-color:var(--sag-r)"></i>Worked example</span>
+    <span><i style="background:var(--chip);border-color:var(--ink)"></i>Exam question</span>
+    <span><i style="background:var(--blu);border-color:var(--blu-r)"></i>Trap</span>
+    <span><i style="background:var(--lil);border-color:var(--lil-r)"></i>Definition</span>
+    <span><a class="ref" data-to="{{FIRST_SEC}}"></a> go to section</span>
+    <span><span class="calc">fn()</span> calculator program</span>
+  </div>
+  <div class="fig"><h3>Course map: each box is a chapter, arrows mean “builds on”</h3>
+    {{COURSE_MAP}}
+  </div>
+</section>
+<section class="fm np" id="contents" data-tab="F" data-title="Contents">
+  <div class="fs-h"><h2>Contents</h2><span class="src">Every section, by chapter.</span></div>
+  {{CONTENTS}}
+</section>
+<section class="fm np" id="finder" data-tab="F" data-title="Which question type?">
+  <div class="fs-h"><h2>Which question type?</h2><span class="src">Find the question, go to the section, copy the example.</span></div>
+  <table class="find"><tr><th>If the question asks…</th><th>Go to</th><th>Practice exam</th><th>Calculator</th></tr>
+{{FINDER_ROWS}}
+</table>
+</section>
+<section class="fm np" id="formulas" data-tab="F" data-title="Formula sheet">
+  <div class="fs-h"><h2>Formula sheet</h2><span class="src">Every formula in the notes, by chapter. Chip = where it is explained.</span></div>
+  {{FORMULAS}}
+</section>
